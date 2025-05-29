@@ -5,7 +5,7 @@
   "require": {
     "php": "^8.1",
     "psr/log": "^3|^2|^1",
-    "tourze/enum-extra": "~0.0.5",
+    "tourze/enum-extra": "0.1.*",
     "tourze/workerman-connection-pipe": "^0.0.3",
     "tourze/workerman-psr-logger": "0.0.*",
     "workerman/workerman": "^5.1"
