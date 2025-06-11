@@ -177,7 +177,7 @@ class SOCKS4 implements ProtocolInterface
                     if ($resolvedIp !== $hostname) {
                         $ip = $resolvedIp;
                     }
-                } catch  (\Throwable $e) {
+                } catch (\Throwable $e) {
                     // 域名解析失败，IP保持为空
                     Container::getLogger()->debug("SOCKS4::decode - 域名解析失败: " . $e->getMessage());
                 }
