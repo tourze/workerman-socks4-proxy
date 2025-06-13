@@ -55,7 +55,7 @@ class SOCKS4Worker extends Worker
     {
         // 不需要再手动同步认证配置到协议类
         // 因为SOCKS4Auth是单例，SOCKS4.php会自动使用相同的实例
-        ConnectionPipeContainer::setLogger($this->logger);
+        ConnectionPipeContainer::getInstance()->setLogger($this->logger);
     }
 
     /**
