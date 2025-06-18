@@ -39,8 +39,6 @@ class SOCKS4ResponseTest extends TestCase
     {
         // 测试生成选项数组
         $options = SOCKS4Response::genOptions();
-        
-        $this->assertIsArray($options);
         $this->assertCount(3, $options);
         
         // 验证选项内容
@@ -72,8 +70,6 @@ class SOCKS4ResponseTest extends TestCase
     {
         // 测试toSelectItem方法返回格式正确的数组
         $item = SOCKS4Response::GRANTED->toSelectItem();
-        
-        $this->assertIsArray($item);
         $this->assertArrayHasKey('label', $item);
         $this->assertArrayHasKey('value', $item);
         $this->assertArrayHasKey('text', $item);
