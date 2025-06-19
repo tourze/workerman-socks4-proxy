@@ -73,7 +73,7 @@ class SOCKS4Worker extends Worker
         //LogUtil::debug('Worker实际收到数据', $data);
 
         $targetConnection = SOCKS4Manager::getTargetConnection($connection);
-        if ($targetConnection) {
+        if ($targetConnection !== null) {
             return;
         }
 
