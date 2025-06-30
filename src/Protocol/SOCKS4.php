@@ -207,11 +207,11 @@ class SOCKS4 implements ProtocolInterface
             
             if (!empty($userId)) {
                 // 构造拒绝响应
-                $response = self::buildResponse(SOCKS4Response::REJECTED, $port, $ip ?: "0.0.0.0");
+                $response = self::buildResponse(SOCKS4Response::REJECTED, $port, $ip ? $ip : "0.0.0.0");
                 $connection->send($response, true);
             } else {
                 // 如果没有提供 userId，返回 IDENTD_FAILED（92）
-                $response = self::buildResponse(SOCKS4Response::IDENTD_FAILED, $port, $ip ?: "0.0.0.0");
+                $response = self::buildResponse(SOCKS4Response::IDENTD_FAILED, $port, $ip ? $ip : "0.0.0.0");
                 $connection->send($response,  true);
             }
             return null;
@@ -232,13 +232,13 @@ class SOCKS4 implements ProtocolInterface
             Container::getLogger()->debug("SOCKS4::decode - 不支持的命令: command={$command}");
 
             // BIND 等命令目前不支持
-            $response = self::buildResponse(SOCKS4Response::REJECTED, $port, $ip ?: "0.0.0.0");
+            $response = self::buildResponse(SOCKS4Response::REJECTED, $port, $ip ? $ip : "0.0.0.0");
             $connection->send($response,  true);
             return null;
         }
 
         Container::getLogger()->debug("SOCKS4::decode - 用户验证通过: userId={$userId}");
-        $response = self::buildResponse(SOCKS4Response::GRANTED, $port, $ip ?: "0.0.0.0");
+        $response = self::buildResponse(SOCKS4Response::GRANTED, $port, $ip ? $ip : "0.0.0.0");
         $connection->send($response,  true);
         SOCKS4Manager::setStatus($connection, SOCKS4ConnectionStatus::ESTABLISHED);
 
