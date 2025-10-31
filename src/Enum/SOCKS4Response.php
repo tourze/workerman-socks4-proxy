@@ -16,13 +16,13 @@ enum SOCKS4Response: int implements Labelable, Itemable, Selectable
     use ItemTrait;
     use SelectTrait;
 
-    case GRANTED = 0x5a; // 90
-    case REJECTED = 0x5b; // 91
-    case IDENTD_FAILED = 0x5c; // 92
+    case GRANTED = 0x5A; // 90
+    case REJECTED = 0x5B; // 91
+    case IDENTD_FAILED = 0x5C; // 92
 
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::GRANTED => '请求被允许',
             self::REJECTED => '请求被拒绝',
             self::IDENTD_FAILED => '认证失败',

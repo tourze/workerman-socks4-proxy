@@ -4,7 +4,6 @@ namespace Tourze\Workerman\SOCKS4\Manager;
 
 use Tourze\Workerman\ConnectionPipe\Pipe\TcpToTcpPipe;
 use Tourze\Workerman\SOCKS4\Enum\SOCKS4ConnectionStatus;
-use WeakMap;
 use Workerman\Connection\ConnectionInterface;
 
 /**
@@ -17,84 +16,88 @@ class SOCKS4Manager
     /**
      * 存储SOCKS4连接状态
      *
-     * @var WeakMap<ConnectionInterface, SOCKS4ConnectionStatus>
+     * @var \WeakMap<ConnectionInterface, SOCKS4ConnectionStatus>
      */
-    private static WeakMap $socks4Status;
+    private static \WeakMap $socks4Status;
 
     /**
      * 存储连接目标IP地址
      *
-     * @var WeakMap<ConnectionInterface, string>
+     * @var \WeakMap<ConnectionInterface, string>
      */
-    private static WeakMap $targetIp;
+    private static \WeakMap $targetIp;
 
     /**
      * 存储连接目标端口
      *
-     * @var WeakMap<ConnectionInterface, int>
+     * @var \WeakMap<ConnectionInterface, int>
      */
-    private static WeakMap $targetPort;
+    private static \WeakMap $targetPort;
 
     /**
      * 存储连接目标域名 (用于SOCKS4a)
      *
-     * @var WeakMap<ConnectionInterface, string>
+     * @var \WeakMap<ConnectionInterface, string>
      */
-    private static WeakMap $targetHostname;
+    private static \WeakMap $targetHostname;
 
     /**
      * 存储连接用户ID
      *
-     * @var WeakMap<ConnectionInterface, string>
+     * @var \WeakMap<ConnectionInterface, string>
      */
-    private static WeakMap $userId;
+    private static \WeakMap $userId;
 
     /**
      * 存储连接的正向管道
      *
-     * @var WeakMap<ConnectionInterface, TcpToTcpPipe>
+     * @var \WeakMap<ConnectionInterface, TcpToTcpPipe>
      */
-    private static WeakMap $forwardPipe;
+    private static \WeakMap $forwardPipe;
 
     /**
      * 存储连接的反向管道
      *
-     * @var WeakMap<ConnectionInterface, TcpToTcpPipe>
+     * @var \WeakMap<ConnectionInterface, TcpToTcpPipe>
      */
-    private static WeakMap $backwardPipe;
+    private static \WeakMap $backwardPipe;
 
     /**
      * 存储连接的目标连接
      *
-     * @var WeakMap<ConnectionInterface, ConnectionInterface>
+     * @var \WeakMap<ConnectionInterface, ConnectionInterface>
      */
-    private static WeakMap $targetConnection;
+    private static \WeakMap $targetConnection;
 
     /**
      * SOCKS版本 (对SOCKS4总是4)
+     *
+     * @var \WeakMap<ConnectionInterface, int>
      */
-    private static WeakMap $socksVersion;
+    private static \WeakMap $socksVersion;
 
     /**
      * SOCKS命令 (CONNECT/BIND)
+     *
+     * @var \WeakMap<ConnectionInterface, mixed>
      */
-    private static WeakMap $socksCommand;
+    private static \WeakMap $socksCommand;
 
     /**
      * 初始化所有WeakMap
      */
     public static function init(): void
     {
-        self::$socks4Status = new WeakMap();
-        self::$targetIp = new WeakMap();
-        self::$targetPort = new WeakMap();
-        self::$targetHostname = new WeakMap();
-        self::$userId = new WeakMap();
-        self::$forwardPipe = new WeakMap();
-        self::$backwardPipe = new WeakMap();
-        self::$targetConnection = new WeakMap();
-        self::$socksVersion = new WeakMap();
-        self::$socksCommand = new WeakMap();
+        self::$socks4Status = new \WeakMap();
+        self::$targetIp = new \WeakMap();
+        self::$targetPort = new \WeakMap();
+        self::$targetHostname = new \WeakMap();
+        self::$userId = new \WeakMap();
+        self::$forwardPipe = new \WeakMap();
+        self::$backwardPipe = new \WeakMap();
+        self::$targetConnection = new \WeakMap();
+        self::$socksVersion = new \WeakMap();
+        self::$socksCommand = new \WeakMap();
     }
 
     /**
@@ -243,6 +246,7 @@ class SOCKS4Manager
 
     /**
      * 设置SOCKS命令
+     * @param mixed $command
      */
     public static function setCommand(ConnectionInterface $connection, $command): void
     {
@@ -252,7 +256,7 @@ class SOCKS4Manager
     /**
      * 获取SOCKS命令
      */
-    public static function getCommand(ConnectionInterface $connection)
+    public static function getCommand(ConnectionInterface $connection): mixed
     {
         return self::$socksCommand[$connection] ?? null;
     }
@@ -264,18 +268,18 @@ class SOCKS4Manager
     {
         // 关闭并清理管道
         $forwardPipe = self::getForwardPipe($connection);
-        if ($forwardPipe !== null) {
+        if (null !== $forwardPipe) {
             $forwardPipe->unpipe();
         }
 
         $backwardPipe = self::getBackwardPipe($connection);
-        if ($backwardPipe !== null) {
+        if (null !== $backwardPipe) {
             $backwardPipe->unpipe();
         }
 
         // 关闭目标连接
         $targetConnection = self::getTargetConnection($connection);
-        if ($targetConnection !== null) {
+        if (null !== $targetConnection) {
             $targetConnection->close();
         }
 
@@ -284,4 +288,4 @@ class SOCKS4Manager
 }
 
 // 初始化所有WeakMap
-SOCKS4Manager::init(); 
+SOCKS4Manager::init();

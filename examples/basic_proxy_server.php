@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 基本SOCKS4代理服务器示例
  *
@@ -16,7 +17,7 @@
  * curl -x socks4://127.0.0.1:31080 --connect-timeout 10 http://www.baidu.com
  */
 
-/**
+/*
  * 注意：WorkermanLogger 只能在 Workerman 环境中使用
  * 只有在 Worker::runAll() 执行后才会记录日志
  */

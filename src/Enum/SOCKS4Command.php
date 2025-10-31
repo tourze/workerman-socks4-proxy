@@ -21,7 +21,7 @@ enum SOCKS4Command: int implements Labelable, Itemable, Selectable
 
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CONNECT => '连接请求',
             self::BIND => '绑定请求',
         };

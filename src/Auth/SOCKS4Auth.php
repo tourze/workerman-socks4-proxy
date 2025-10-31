@@ -23,8 +23,6 @@ class SOCKS4Auth
 
     /**
      * 是否启用用户验证
-     *
-     * @var bool
      */
     private bool $enableAuthentication = false;
 
@@ -40,7 +38,7 @@ class SOCKS4Auth
      */
     public static function getInstance(): self
     {
-        if (self::$instance === null) {
+        if (null === self::$instance) {
             self::$instance = new self();
         }
 
@@ -66,7 +64,7 @@ class SOCKS4Auth
             return true;
         }
 
-        return isset($this->validUsers[$userId]) && $this->validUsers[$userId] === true;
+        return isset($this->validUsers[$userId]) && true === $this->validUsers[$userId];
     }
 
     /**
@@ -87,6 +85,8 @@ class SOCKS4Auth
 
     /**
      * 设置所有有效用户
+     *
+     * @param array<string, bool> $users
      */
     public function setValidUsers(array $users): void
     {
@@ -95,6 +95,8 @@ class SOCKS4Auth
 
     /**
      * 获取所有有效用户
+     *
+     * @return array<string, bool>
      */
     public function getValidUsers(): array
     {

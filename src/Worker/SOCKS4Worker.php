@@ -19,8 +19,6 @@ class SOCKS4Worker extends Worker
 {
     /**
      * 认证管理器
-     *
-     * @var SOCKS4Auth
      */
     private readonly SOCKS4Auth $auth;
 
@@ -32,8 +30,7 @@ class SOCKS4Worker extends Worker
     public function __construct(
         private readonly LoggerInterface $logger,
         string $socketName = 'tcp://0.0.0.0:1080',
-    )
-    {
+    ) {
         // 设置协议为SOCKS4
         parent::__construct($socketName);
         $this->protocol = SOCKS4::class;
@@ -62,18 +59,19 @@ class SOCKS4Worker extends Worker
      * 当收到客户端消息时
      *
      * @param TcpConnection $connection 客户端连接
-     * @param mixed $data 客户端数据
+     * @param mixed         $data       客户端数据
      */
     public function onClientMessage(TcpConnection $connection, mixed $data): void
     {
-        if (empty($data)) {
+        if (null === $data || '' === $data) {
             $this->logger->debug('数据为空，不处理');
+
             return;
         }
-        //LogUtil::debug('Worker实际收到数据', $data);
+        // LogUtil::debug('Worker实际收到数据', $data);
 
         $targetConnection = SOCKS4Manager::getTargetConnection($connection);
-        if ($targetConnection !== null) {
+        if (null !== $targetConnection) {
             return;
         }
 
@@ -81,11 +79,12 @@ class SOCKS4Worker extends Worker
         $targetIp = SOCKS4Manager::getTargetIp($connection);
         $targetPort = SOCKS4Manager::getTargetPort($connection);
 
-        if (empty($targetIp) || empty($targetPort)) {
+        if (null === $targetIp || '' === $targetIp || null === $targetPort) {
             // 记录错误信息
             $this->logger->warning('SOCKS4协议错误: 目标IP或端口为空');
             // SOCKS4协议解析失败或被拒绝
             $connection->close();
+
             return;
         }
 

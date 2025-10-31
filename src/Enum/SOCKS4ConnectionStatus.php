@@ -21,7 +21,7 @@ enum SOCKS4ConnectionStatus: int implements Labelable, Itemable, Selectable
 
     public function getLabel(): string
     {
-        return match($this) {
+        return match ($this) {
             self::INITIAL => '初始状态',
             self::ESTABLISHED => '已建立连接',
         };
