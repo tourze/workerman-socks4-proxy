@@ -4,7 +4,7 @@
   "license": "MIT",
   "require": {
     "psr/log": "^3|^2|^1",
-    "tourze/enum-extra": "1.*",
+    "tourze/enum-extra": "1.0.*",
     "tourze/workerman-connection-pipe": "0.0.*",
     "tourze/workerman-psr-logger": "0.0.*",
     "workerman/workerman": "^5.1"
